@@ -15,7 +15,15 @@
                 </div>
                 <div class="col-md-2">
                     <select name="variant" id="" class="form-control">
-
+                        @foreach($variants as $index=>$key)
+                            <option value="" disabled selected>{{$key->title}}</option>
+                                @foreach($variants_attr as $index_attr=>$key_attr)
+                                    @if($key_attr->variant_title == $key->title)
+                                        <option class="ml-2" value={{$key_attr->variant_name}}>{{$key_attr->variant_name}}</option>
+                                    @endif
+                                @endforeach
+                           
+                        @endforeach
                     </select>
                 </div>
 
@@ -51,23 +59,30 @@
                     </thead>
 
                     <tbody>
-
+                    
+                    @foreach ($all_products_data as $index=>$key)
+        
                     <tr>
-                        <td>1</td>
-                        <td>T-Shirt <br> Created at : 25-Aug-2020</td>
-                        <td>Quality product in low cost</td>
+                        <td>{{$key->id}}</td>
+                        <td>{{$key->title}}<br> Created at : {{$key->created_at}}</td>
+                        <td class="col-lg-3 pb-0">{{$key->description}}</td>
                         <td>
                             <dl class="row mb-0" style="height: 80px; overflow: hidden" id="variant">
+                                
+                                @foreach($all_product_id as $id_index=>$key_id)
+                                    @if($key->product_id ==$key_id->id )
+                                    <dt class="col-sm-3 pb-0">
+                                        {{$key->variant}}
+                                    </dt>
+                                    <dd class="col-sm-9">
+                                        <dl class="row mb-0">
+                                            <dt class="col-sm-4 pb-0">Price : {{ $key->price }}</dt>
+                                            <dd class="col-sm-8 pb-0">InStock : {{ $key->stock }}</dd>
+                                        </dl>
+                                    </dd>
+                                    @endif
+                                @endforeach
 
-                                <dt class="col-sm-3 pb-0">
-                                    SM/ Red/ V-Nick
-                                </dt>
-                                <dd class="col-sm-9">
-                                    <dl class="row mb-0">
-                                        <dt class="col-sm-4 pb-0">Price : {{ number_format(200,2) }}</dt>
-                                        <dd class="col-sm-8 pb-0">InStock : {{ number_format(50,2) }}</dd>
-                                    </dl>
-                                </dd>
                             </dl>
                             <button onclick="$('#variant').toggleClass('h-auto')" class="btn btn-sm btn-link">Show more</button>
                         </td>
@@ -77,7 +92,7 @@
                             </div>
                         </td>
                     </tr>
-
+                    @endforeach
                     </tbody>
 
                 </table>
@@ -88,10 +103,16 @@
         <div class="card-footer">
             <div class="row justify-content-between">
                 <div class="col-md-6">
-                    <p>Showing 1 to 10 out of 100</p>
+                    <p>Showing 1 to 
+                        @if ($count<10)
+                            {{$count}}
+                        @else
+                            10 
+                        @endif
+                        out of {{$count}}</p>
                 </div>
                 <div class="col-md-2">
-
+                    {{$all_products_data->links()}}
                 </div>
             </div>
         </div>
