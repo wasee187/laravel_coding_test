@@ -35,8 +35,8 @@ class ProductController extends Controller
             ->where('product_variant_prices.price', '>=', $search_price_from)
             ->where('product_variant_prices.price', '<', $search_price_to)
             ->where('products.created_at', '<=', $search_date)
-            ->paginate(10);
-
+            ->paginate(5);
+            
             $data_count = DB::table('products')
             ->join('product_variants','products.id','=','product_variants.product_id') 
             ->join('product_variant_prices','products.id','=','product_variant_prices.product_id') 
