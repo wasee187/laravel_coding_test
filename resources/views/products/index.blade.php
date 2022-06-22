@@ -7,6 +7,16 @@
     </div>
 
 
+    @if(Session::has('message'))
+        <div class="alert alert-success" role="alert">
+            {{session('message')}}
+        </div>
+    @elseif(Session::has('message'))
+        <div class="alert alert-danger" role="alert">
+            {{session('message')}}
+        </div>
+    @endif
+
     <div class="card">
         <form action="" method="get" class="card-header">
             <div class="form-row justify-content-between">
@@ -88,7 +98,7 @@
                         </td>
                         <td>
                             <div class="btn-group btn-group-sm">
-                                <a href="{{ route('product.edit', 1) }}" class="btn btn-success">Edit</a>
+                                <a href="{{url('product/edit/')}}/{{$key->id}}" class="btn btn-success">Edit</a>
                             </div>
                         </td>
                     </tr>
@@ -103,6 +113,12 @@
         <div class="card-footer">
             <div class="row justify-content-between">
                 <div class="col-md-6">
+                    @if( $data_count >0)
+                    <p>Showing 1 to 
+                        
+                        {{$data_count}} 
+                        out of {{$count}}</p>
+                    @else
                     <p>Showing 1 to 
                         @if ($count<10)
                             {{$count}}
@@ -110,6 +126,8 @@
                             10 
                         @endif
                         out of {{$count}}</p>
+                    @endif
+
                 </div>
                 <div class="col-md-2">
                     {{$all_products_data->links()}}

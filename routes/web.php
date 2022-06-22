@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('product', 'ProductController');
     Route::resource('blog', 'BlogController');
     Route::resource('blog-category', 'BlogCategoryController');
+    Route::post('/product',[ProductController::class, 'store']);
+    Route::get('/product/edit/{id}',[ProductController::class, 'edit']);
+    Route::post('/product/update/{id}',[ProductController::class, 'store']);
 });
 
 
